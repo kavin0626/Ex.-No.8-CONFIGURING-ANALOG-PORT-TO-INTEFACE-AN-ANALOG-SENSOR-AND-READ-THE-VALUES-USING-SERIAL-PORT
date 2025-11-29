@@ -1,12 +1,7 @@
-**** 
 
 
-### Ex. No. :8 CONFIGURING ANALOG PORT TO INTEFACE AN ANALOG SENSOR AND READ THE VALUES USING SERIAL PORT
-```
-NAME:KAVINRAJ.S
-REG NO:212223100019
-```
-###  
+
+# Ex. No. :8 CONFIGURING ANALOG PORT TO INTEFACE AN ANALOG SENSOR AND READ THE VALUES USING SERIAL PORT  
 
 ## Aim: 
 To configure ADC channel for interfacing an analog sensor and read the values on the com port 
@@ -151,49 +146,140 @@ D0 pin is a digital output
 GND pin is a Ground
 This module also includes a potentiometer that will fix the threshold value, & the value can be evaluated by the comparator-LM393. The LED will turn on/off based on the threshold value.
 
+## Circuit Diagram: 
+![WhatsApp Image 2025-11-13 at 11 45 19_15ad15a4](https://github.com/user-attachments/assets/d9fa8061-08c8-4a6a-8d19-70b28acc4696)
 
-##  Program:
+##  Program 
 ```
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2025 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stdio.h"
-#if defined(_GNUC_)
+
+#if defined(__GNUC__)
 
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #endif
 uint16_t readValue;
 
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
 
 UART_HandleTypeDef huart2;
 
+/* USER CODE BEGIN PV */
+
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_USART2_UART_Init(void);
+/* USER CODE BEGIN PFP */
 
+/* USER CODE END PFP */
+
+/* Private user code ---------------------------------------------------------*/
+/* USER CODE BEGIN 0 */
+
+/* USER CODE END 0 */
+
+/**
+  * @brief  The application entry point.
+  * @retval int
+  */
 int main(void)
 {
+
+  /* USER CODE BEGIN 1 */
+
+  /* USER CODE END 1 */
+
+  /* MCU Configuration--------------------------------------------------------*/
+
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
+
+  /* USER CODE BEGIN Init */
+
+  /* USER CODE END Init */
+
+  /* Configure the system clock */
   SystemClock_Config();
+
+  /* USER CODE BEGIN SysInit */
+
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_ADC1_Init();
+  MX_USART2_UART_Init();
+  /* USER CODE BEGIN 2 */
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  	  HAL_ADC_Start(&hadc1);
-	  	  	 	  	  	  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-	  	  	 	  	  	  readValue = HAL_ADC_GetValue(&hadc1);
-	  	  	 	  	  	  printf("Read value : %d\n", readValue);
+    /* USER CODE END WHILE */
+	  HAL_ADC_Start(&hadc1);
+	 	  	 	  	  	  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+	 	  	 	  	  	  readValue = HAL_ADC_GetValue(&hadc1);
+	 	  	 	  	  	  printf("Read value : %d\n", readValue);
 
-	  	  	 	  	  	  uint32_t soilmoist = 100 - (readValue / 40.96);
-	  	  	 	  	  	  printf("Soil moisture : %ld %%\n", soilmoist);
-	  	  	 	  	  	  HAL_Delay(1000);
+	 	  	 	  	  	  uint32_t soilmoist = 100 - (readValue / 40.96);
+	 	  	 	  	  	  printf("Soil moisture : %ld %%\n", soilmoist);
+	 	  	 	  	  	  HAL_Delay(1000);
+
+    /* USER CODE BEGIN 3 */
   }
+  /* USER CODE END 3 */
 }
 PUTCHAR_PROTOTYPE
 {
 	HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
-	return ch;
+
+   return ch;
 }
 
 /**
@@ -310,7 +396,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -395,6 +481,10 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
+
+
 ```
 
  
@@ -403,13 +493,11 @@ void assert_failed(uint8_t *file, uint32_t line)
  
 ## Output  :
 
+<img width="1280" height="800" alt="image" src="https://github.com/user-attachments/assets/3083a7e1-e189-4af3-8515-0ccab9d47387" />
 
-<img width="997" height="834" alt="image" src="https://github.com/user-attachments/assets/55bb615a-076e-4666-b5d0-3345c4faeb8b" />
 
-<img width="721" height="1280" alt="image" src="https://github.com/user-attachments/assets/6b97a2e5-d8be-4977-9a16-8ba003c8e543" />
 
 
 ## Result:
-Hence,the configuring analog port to inteface an analog sensor and read the values using serial port runned successfully.
-
+ THE CONFIGURING ANALOG PORT TO INTEFACE AN ANALOG SENSOR AND READ THE VALUES USING SERIAL PORT IS EXECUTED SUCCESSSFULLY. 
 
